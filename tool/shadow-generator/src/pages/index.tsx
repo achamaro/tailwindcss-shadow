@@ -1,5 +1,5 @@
 import { GenerateShadowOptions } from "@achamaro/tailwindcss-shadow";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import dedent from "ts-dedent";
 
 import { Point, SignedPoint } from "@/domain/values/point";
@@ -48,7 +48,7 @@ export default function Index() {
   return (
     <main
       className={cn(
-        "flex h-screen items-start justify-center gap-10 bg-sky-200 p-10",
+        "flex min-h-screen items-start justify-center gap-10 bg-sky-200 p-10",
         colors[color][0]
       )}
     >
@@ -76,13 +76,34 @@ export default function Index() {
               z
               <InputSlider value={z} onChange={setZ} />
             </InputField>
-            <code className="mt-4 w-[640px] whitespace-pre-wrap rounded border border-white/70 bg-white/50 p-2 text-xs">
+            <Code className="mt-4 w-[640px]">
               {dedent`
               className="${colors[color][1]} shadow-sc-${
                 presets.includes(zValue) ? zValue : `[${zValue}]`
               }"
               `}
-            </code>
+            </Code>
+
+            <Code className="mt-4 w-[640px]">
+              {dedent`
+              // tailwindcss.config.js
+
+              import { coloredShadow, shadowColor } from "@achamaro/tailwindcss-shadow";
+
+              /** @type {import('tailwindcss').Config} */
+              export default {
+                // ...
+                plugins: [
+                  shadowColor(),
+                  coloredShadow({
+                    ${Object.entries(shadowOptions)
+                      .map(([k, v]) => `${k}: ${JSON.stringify(v)}`)
+                      .join(",\n")}
+                  }),
+                ],
+              };
+              `}
+            </Code>
           </div>
         </div>
       </div>
@@ -104,5 +125,24 @@ export default function Index() {
         <ConfigOptions state={optionsState} />
       </div>
     </main>
+  );
+}
+
+function Code({
+  className,
+  children,
+}: {
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <code
+      className={cn(
+        "whitespace-pre-wrap rounded border border-white/70 bg-white/50 p-2 text-xs",
+        className
+      )}
+    >
+      {children}
+    </code>
   );
 }
