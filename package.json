@@ -1,0 +1,12 @@
+{
+  "name": "tailwindcss-shadow",
+  "private": true,
+  "workspaces": [
+    "packages/tailwindcss-shadow",
+    "tool/shadow-generator"
+  ],
+  "volta": {
+    "node": "18.16.0",
+    "npm": "9.6.5"
+  }
+}

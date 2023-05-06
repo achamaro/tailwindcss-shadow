@@ -1,0 +1,15 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "ROOT"
+    },
+    {
+      "path": "./packages/tailwindcss-shadow"
+    },
+    {
+      "path": "./tool/shadow-generator"
+    }
+  ],
+  "settings": {}
+}
